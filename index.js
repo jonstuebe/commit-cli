@@ -24,6 +24,7 @@ inquirer
     },
     {
       name: "otherType",
+      message: "What type of code is this?",
       type: "list",
       choices: ["Tech", "Hotfix", "Bugfix"],
       when: ({ isJiraTicket }) => {
