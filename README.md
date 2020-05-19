@@ -1,6 +1,6 @@
 # commit-cli
 
-A simple tool to write you messages for you
+A simple tool to write your commit messages for you
 
 ## Install
 
