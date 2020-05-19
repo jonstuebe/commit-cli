@@ -23,6 +23,14 @@ inquirer
       },
     },
     {
+      name: "otherType",
+      type: "list",
+      choices: ["Tech", "Hotfix", "Bugfix"],
+      when: ({ isJiraTicket }) => {
+        return !isJiraTicket;
+      },
+    },
+    {
       name: "description",
       type: "input",
       message: "Enter the description for your commit:",
@@ -37,28 +45,30 @@ inquirer
       message: "Does everything look good?",
     },
   ])
-  .then(({ isJiraTicket, jiraTicket, description, confirmCommit }) => {
-    console.log("");
-    // new line
+  .then(
+    ({ isJiraTicket, jiraTicket, otherType, description, confirmCommit }) => {
+      console.log("");
+      // new line
 
-    if (confirmCommit) {
-      let message = "";
-      if (isJiraTicket) {
-        message = `${jiraTicket}: ${description}`;
+      if (confirmCommit) {
+        let message = "";
+        if (isJiraTicket) {
+          message = `${jiraTicket}: ${description}`;
+        } else {
+          message = `${otherType}: ${description}`;
+        }
+
+        simpleGit
+          .commit(message)
+          .then(() => {
+            console.log(chalk.green("Code Committed:"));
+            console.log(chalk.green(message));
+          })
+          .catch((error) => {
+            console.log(chalk.red(error.message));
+          });
       } else {
-        message = `Tech: ${description}`;
+        console.log(chalk.red("Commit Aborted!"));
       }
-
-      simpleGit
-        .commit(message)
-        .then(() => {
-          console.log(chalk.green("Code Committed:"));
-          console.log(chalk.green(message));
-        })
-        .catch((error) => {
-          console.log(chalk.red(error.message));
-        });
-    } else {
-      console.log(chalk.red("Commit Aborted!"));
     }
-  });
+  );
