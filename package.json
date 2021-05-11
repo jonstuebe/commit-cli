@@ -11,7 +11,7 @@
     "chalk": "^4.0.0",
     "commander": "^5.1.0",
     "inquirer": "^7.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "pkg-dir": "^4.2.0",
     "simple-git": "^2.5.0"
   }
